@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>MER360</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/login.css') }}"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+>
+</head>
+
+<body>
+
+    <div class="particulas">
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+
+</div>
+
+<div
+    class="overlay"
+    id="overlay"
+></div>
+
+<div
+    class="contenedor"
+    id="contenedorPrincipal"
+>
+
+    <div class="panel-imagen">
+
+        <div class="contenedor-logo">
+
+            <img
+                src="{{ url_for('static', filename='img/logo_mer360.png') }}"
+                alt="MER360"
+                class="imagen-superior"
+            >
+
+        </div>
+
+        <div class="logo">
+
+            <h1>MER360</h1>
+
+        </div>
+
+        <div class="info">
+
+            <p>
+                Encuentra promociones, productos,
+                servicios y comercios desde una sola plataforma.
+            </p>
+
+        </div>
+
+        <div class="video-contenedor">
+
+            <video
+                controls
+                muted
+                loop
+                class="video-panel"
+            >
+
+                <source
+                    src="{{ url_for('static', filename='video/presentacion.mp4') }}"
+                    type="video/mp4"
+                >
+
+            </video>
+
+        </div>
+
+    </div>
+
+    <div class="panel-formulario">
+
+        <div class="tarjeta">
+
+            <h2>
+                Crear Cuenta
+            </h2>
+
+            <form
+                id="registroForm"
+                method="POST"
+            >
+
+                <div class="grupo">
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Nombre"
+                        required
+                    >
+
+                </div>
+
+                <div class="grupo">
+
+                    <input
+                        type="text"
+                        id="apellidos"
+                        name="apellidos"
+                        placeholder="Apellidos"
+                        required
+                    >
+
+                </div>
+
+                <div class="grupo">
+
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        placeholder="Correo Electrónico"
+                        required
+                    >
+
+                    <span
+                        id="correoEstado"
+                        class="estado"
+                    ></span>
+
+                </div>
+
+                <div class="grupo">
+
+                    <input
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        placeholder="Teléfono"
+                        required
+                    >
+
+                </div>
+
+                <div class="grupo password">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="ver-password"
+                        onclick="togglePassword('password')"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <div class="password-strength">
+
+                    <div
+                        class="strength-bar"
+                        id="strengthBar"
+                    ></div>
+
+                </div>
+
+                <span
+                    id="strengthText"
+                    class="strength-text"
+                >
+                    Seguridad de contraseña
+                </span>
+
+                <div class="grupo password">
+
+                    <input
+                        type="password"
+                        id="confirmarPassword"
+                        name="confirmarPassword"
+                        placeholder="Confirmar Contraseña"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="ver-password"
+                        onclick="togglePassword('confirmarPassword')"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <span
+                    id="passwordMatch"
+                    class="estado"
+                ></span>
+
+                <div class="grupo">
+
+                    <input
+                        type="text"
+                        id="codigo"
+                        name="codigo"
+                        placeholder="Código de Invitación (Opcional)"
+                    >
+
+                </div>
+
+                <span
+                    id="codigoEstado"
+                    class="estado"
+                ></span>
+
+                <button
+                    type="submit"
+                    class="btn-principal"
+                >
+                    Crear Cuenta
+                </button>
+
+            </form>
+
+            <div class="linea"></div>
+
+            <p class="texto-login">
+
+                ¿Ya tienes una cuenta?
+
+                <button
+                    id="abrirLogin"
+                    class="btn-link"
+                    type="button"
+                >
+                    Iniciar Sesión
+                </button>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    class="modal-login"
+    id="modalLogin"
+>
+
+    <div class="login-card">
+
+        <button
+            class="cerrar"
+            id="cerrarLogin"
+            type="button"
+        >
+            ✕
+        </button>
+
+        <h2>
+            Iniciar Sesión
+        </h2>
+
+        <form action="/iniciar_sesion" method="POST">
+
+            <div class="grupo">
+
+                <input
+                    type="email"
+                    name="correo"
+                    placeholder="Correo Electrónico"
+                    required
+                >
+
+            </div>
+
+            <div class="grupo password">
+
+                <input
+                    type="password"
+                    name="password"
+                    id="loginPassword"
+                    placeholder="Contraseña"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="ver-password"
+                    onclick="togglePassword('loginPassword')"
+                >
+                    👁
+                </button>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-principal"
+            >
+                Entrar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script
+    src="{{ url_for('static', filename='js/login.js') }}"
+></script>
+
+</body>
+
+</html>

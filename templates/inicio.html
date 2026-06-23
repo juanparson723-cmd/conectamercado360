@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>MER360</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/inicio.css') }}"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="acciones">
+
+        <a href="/perfil" class="perfil">
+            {{ session["nombre"] }}
+        </a>
+
+        {% if session["id_r"] == 2 %}
+
+        <a href="/mi_local" class="admin-btn">
+            Mi Local
+        </a>
+
+        {% endif %}
+
+        {% if session["id_r"] == 1 %}
+
+        <a href="/superadmin" class="admin-btn">
+            Administración
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>
+        Encuentra todo en un solo lugar
+    </h1>
+
+    <p>
+        Productos, promociones y locales comerciales
+    </p>
+
+    <form
+        action="/resultados"
+        method="GET"
+        class="buscador"
+    >
+
+        <input
+            type="text"
+            name="q"
+            placeholder="Buscar productos o locales..."
+            required
+        >
+
+        <button type="submit">
+
+            Buscar
+
+        </button>
+
+    </form>
+
+</section>
+
+<section class="seccion">
+
+    <div class="titulo">
+
+         Locales Destacados
+
+    </div>
+
+    <div class="grid-productos">
+
+        {% for producto in productos[:4] %}
+
+        <div class="card">
+
+            <img
+                src="{{ producto.imagenes }}"
+                alt="{{ producto.nombre }}"
+            >
+
+            <div class="contenido">
+
+                <h3>
+
+                    {{ producto.nombre }}
+
+                </h3>
+
+                <p>
+
+                    ${{ producto.precio }}
+
+                </p>
+
+                <a
+                    href="/local/{{ producto.id_l }}"
+                    class="btn-card"
+                >
+
+                    Ver Local
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<section class="seccion">
+
+    <div class="titulo">
+
+         Productos Populares
+
+    </div>
+
+    <div class="grid-productos">
+
+        {% for producto in productos %}
+
+        <div class="card">
+
+            <img
+                src="{{ producto.imagenes }}"
+                alt="{{ producto.nombre }}"
+            >
+
+            <div class="contenido">
+
+                <h3>
+
+                    {{ producto.nombre }}
+
+                </h3>
+
+                <p>
+
+                    ${{ producto.precio }}
+
+                </p>
+
+                <a
+                    href="/local/{{ producto.id_l }}"
+                    class="btn-card"
+                >
+
+                    Ver Local
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+</body>
+
+</html>

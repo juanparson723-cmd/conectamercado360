@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Mi Local | MER360
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/admin_local.css') }}"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <a href="/inicio">
+
+            MER360
+
+        </a>
+
+    </div>
+
+    <div class="acciones">
+
+        <a href="/inicio">
+
+            Inicio
+
+        </a>
+
+        <a href="/logout">
+
+            Cerrar Sesión
+
+        </a>
+
+    </div>
+
+</header>
+
+<section class="panel">
+
+    <div class="encabezado">
+
+        <div>
+
+            <h1>
+
+                {{ local.nombre }}
+
+            </h1>
+
+            <p>
+
+                Panel de Administración del Local
+
+            </p>
+
+        </div>
+
+        <button
+            id="abrirProducto"
+            class="btn-agregar"
+        >
+
+            + Agregar Producto
+
+        </button>
+
+    </div>
+
+</section>
+
+<section class="productos">
+
+    <h2>
+
+        Mis Productos
+
+    </h2>
+
+    <div class="grid-productos">
+
+        {% for producto in productos %}
+
+        <div class="card">
+
+            <img
+                src="{{ producto.imagenes }}"
+                alt="{{ producto.nombre }}"
+            >
+
+            <div class="contenido">
+
+                <h3>
+
+                    {{ producto.nombre }}
+
+                </h3>
+
+                <p>
+
+                    ${{ producto.precio }}
+
+                </p>
+
+                <div class="acciones-card">
+
+                    <a
+                        href="/editar_producto/{{ producto.id_p }}"
+                        class="btn-editar"
+                    >
+
+                        Editar
+
+                    </a>
+
+                    <a
+                        href="/eliminar_producto/{{ producto.id_p }}"
+                        class="btn-eliminar"
+                    >
+
+                        Eliminar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<div
+    class="overlay"
+    id="overlay"
+></div>
+
+<div
+    class="modal-producto"
+    id="modalProducto"
+>
+
+    <div class="producto-card">
+
+        <button
+            class="cerrar"
+            id="cerrarProducto"
+            type="button"
+        >
+
+            ✕
+
+        </button>
+
+        <h2>
+
+            Nuevo Producto
+
+        </h2>
+
+        <form
+            action="/agregar_producto"
+            method="POST"
+        >
+
+            <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre del producto"
+                required
+            >
+
+            <input
+                type="number"
+                step="0.01"
+                name="precio"
+                placeholder="Precio"
+                required
+            >
+
+            <input
+                type="text"
+                name="imagenes"
+                placeholder="URL de imagen"
+            >
+
+            <textarea
+                name="descripcion"
+                placeholder="Descripción"
+                rows="5"
+            ></textarea>
+
+            <button
+                type="submit"
+                class="btn-guardar"
+            >
+
+                Guardar Producto
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const abrirProducto =
+document.getElementById("abrirProducto");
+
+const cerrarProducto =
+document.getElementById("cerrarProducto");
+
+const modalProducto =
+document.getElementById("modalProducto");
+
+const overlay =
+document.getElementById("overlay");
+
+abrirProducto.addEventListener(
+    "click",
+    () => {
+
+        modalProducto.classList.add("activo");
+        overlay.classList.add("activo");
+
+    }
+);
+
+cerrarProducto.addEventListener(
+    "click",
+    () => {
+
+        modalProducto.classList.remove("activo");
+        overlay.classList.remove("activo");
+
+    }
+);
+
+overlay.addEventListener(
+    "click",
+    () => {
+
+        modalProducto.classList.remove("activo");
+        overlay.classList.remove("activo");
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
